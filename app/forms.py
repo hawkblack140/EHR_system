@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
 # ---------- Login Form ----------
@@ -16,28 +16,12 @@ class LoginForm(FlaskForm):
 
 
 # ---------- Register Form ----------
-from wtforms.validators import DataRequired, Length, Email, EqualTo
-
 class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[
-        DataRequired(message="Username is required."),
-        Length(min=3, max=150)
-    ])
-    email = StringField('Email', validators=[
-        DataRequired(), Email()
-    ])
-    password = PasswordField('Password', validators=[
-        DataRequired(),
-        Length(min=6, message="Password must be at least 6 characters.")
-    ])
-    confirm_password = PasswordField('Confirm Password', validators=[
-        DataRequired(),
-        EqualTo('password', message="Passwords must match.")
-    ])
-    role = SelectField('Role', choices=[
-        ('doctor', 'Doctor'),
-        ('patient', 'Patient')
-    ])
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=150)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    role = SelectField('Role', choices=[('doctor', 'Doctor'), ('patient', 'Patient')], validators=[DataRequired()])
     submit = SubmitField('Register')
 
 

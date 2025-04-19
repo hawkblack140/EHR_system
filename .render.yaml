@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: ehr-system
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        value: your_secret_key_here
