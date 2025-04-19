@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Doctor Dashboard</h2>
+
+    <div class="d-flex justify-content-between mb-3">
+        <h5>Welcome, Dr. {{ current_user.username }}</h5>
+        <a href="{{ url_for('main.add_record') }}" class="btn btn-success">+ Add New Record</a>
+    </div>
+
+    {% if records %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Symptoms</th>
+                    <th>Diagnosis</th>
+                    <th>Prescription</th>
+                    <th>Date Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.patient_name }}</td>
+                    <td>{{ record.symptoms }}</td>
+                    <td>{{ record.diagnosis }}</td>
+                    <td>{{ record.prescription }}</td>
+                    <td>{{ record.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <a href="{{ url_for('main.edit_record', record_id=record.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ url_for('main.delete_record', record_id=record.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this record?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="text-muted text-center">No records available. Add one using the button above.</p>
+    {% endif %}
+</div>
+{% endblock %}

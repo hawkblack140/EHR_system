@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Add Patient Record</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>{{ form.patient_name.label }}<br>{{ form.patient_name() }}</p>
+    <p>{{ form.symptoms.label }}<br>{{ form.symptoms(rows=3) }}</p>
+    <p>{{ form.diagnosis.label }}<br>{{ form.diagnosis(rows=3) }}</p>
+    <p>{{ form.prescription.label }}<br>{{ form.prescription(rows=3) }}</p>
+    <p>{{ form.submit(class="btn") }}</p>
+</form>
+<p><a href="{{ url_for('main.dashboard') }}">Back to Dashboard</a></p>
+{% endblock %}

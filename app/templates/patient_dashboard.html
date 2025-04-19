@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Welcome, {{ current_user.username }}!</h2>
+
+{% if records %}
+    <h3>Your Medical Records</h3>
+    <ul>
+        {% for record in records %}
+            <li>
+                <strong>{{ record.patient_name }}</strong> ({{ record.created_at.strftime('%Y-%m-%d') }})<br>
+                <em>Symptoms:</em> {{ record.symptoms }}<br>
+                <em>Diagnosis:</em> {{ record.diagnosis }}<br>
+                <em>Prescription:</em> {{ record.prescription }}
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No records found.</p>
+{% endif %}
+
+<p><a href="{{ url_for('main.logout') }}">Logout</a></p>
+{% endblock %}
